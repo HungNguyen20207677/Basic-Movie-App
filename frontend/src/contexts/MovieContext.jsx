@@ -5,12 +5,17 @@ const MovieContext = createContext();
 export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
-  const [favourites, setFavourites] = useState([]);
-  useEffect(() => {
+  const [favourites, setFavourites] = useState(() => {
     const storedFavs = localStorage.getItem("favourites");
 
-    if (storedFavs) setFavourites(JSON.parse(storedFavs));
-  }, []);
+    return storedFavs ? JSON.parse(storedFavs) : [];  
+  });
+
+  // useEffect(() => {
+  //   const storedFavs = localStorage.getItem("favourites");
+
+  //   if (storedFavs) setFavourites(JSON.parse(storedFavs));
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem("favourites", JSON.stringify(favourites));
